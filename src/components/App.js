@@ -18,6 +18,9 @@ export default class App extends Component {
   setCurrentDeal = (dealId) => {
     this.setState({ currentDealId: dealId });
   }
+  unSetCurrentDeal = () => {
+    this.setState({ currentDealId: null });
+  }
 
   currentDeal = () => {
     return this.state.deals.find(
@@ -27,7 +30,9 @@ export default class App extends Component {
 
   render() {
     if (this.state.currentDealId) {
-      return <DealDetail initialDealData={this.currentDeal()}/>;
+      return <DealDetail
+        initialDealData={this.currentDeal()} 
+        onBack={this.unSetCurrentDeal}/>;
     }
     if (this.state.deals.length > 0) {
       return <DealList
