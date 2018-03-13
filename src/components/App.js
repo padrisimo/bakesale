@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Animated, StyleSheet } from 'react-native';
+import { View, Text, Animated, StyleSheet, Easing, Dimensions } from 'react-native';
 import ajax from '../ajax';
 import DealList from './DealList';
 import DealDetail from './DealDetail';
@@ -13,17 +13,24 @@ export default class App extends Component {
     dealsFormSearch: []
   }
   animatedTitle = (direction = 1) => {
-    Animated.spring(
+    const width = Dimensions.get('window').width - 150;
+    Animated.timing(
       this.titleXPos,
-      { toValue: direction * 100 }
-    ).start(() => {
-      this.animatedTitle(-1 * direction)
+      {
+        toValue: direction * (width / 2),
+        duration: 1000,
+        easing: Easing.ease
+      }
+    ).start(({ finished }) => {
+      if(finished){
+        this.animatedTitle(-1 * direction);
+      }
     });
   }
   async componentDidMount() {
     this.animatedTitle();
-    /*     const deals = await ajax.fetchInitialDeals();
-        this.setState({ deals }); */
+    const deals = await ajax.fetchInitialDeals();
+    this.setState({ deals });
   }
 
   searchDeals = async (searchTerm) => {
