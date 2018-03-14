@@ -1,11 +1,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  Animated,
+  PanResponder,
+  StyleSheet
+} from 'react-native';
 
 import { priceDisplay } from '../util';
 import ajax from '../ajax';
 
 class DealDetail extends React.Component {
+  imagePanResponder = PanResponder.create({
+    onStartShouldSetPanResponder: () => true,
+    onPanResponderMove: (evt, gs) => {
+      console.warn('Moving');
+    },
+    onPanResponderRelease: (evt, gs) =>{
+      console.warn('released!!');
+    }
+  });
   static propTypes = {
     initialDealData: PropTypes.object.isRequired,
     onBack: PropTypes.func.isRequired,
@@ -26,7 +43,11 @@ class DealDetail extends React.Component {
         <TouchableOpacity onPress={this.props.onBack}>
           <Text style={styles.backLink}>Back</Text>
         </TouchableOpacity>
-        <Image source={{ uri: deal.media[0] }} style={styles.image} />
+        <Image 
+          {...this.imagePanResponder.panHandlers}
+          source={{ uri: deal.media[0] }}
+          style={styles.image} 
+        />
         <View style={styles.detail}>
           <View>
             <Text style={styles.title}>{deal.title}</Text>

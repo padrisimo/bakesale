@@ -1,5 +1,12 @@
 import React, { Component } from 'react';
-import { View, Text, Animated, StyleSheet, Easing, Dimensions } from 'react-native';
+import {
+  View,
+  Text,
+  Animated,
+  StyleSheet,
+  Easing,
+  Dimensions
+} from 'react-native';
 import ajax from '../ajax';
 import DealList from './DealList';
 import DealDetail from './DealDetail';
@@ -22,7 +29,7 @@ export default class App extends Component {
         easing: Easing.ease
       }
     ).start(({ finished }) => {
-      if(finished){
+      if (finished) {
         this.animatedTitle(-1 * direction);
       }
     });
