@@ -6,6 +6,8 @@ import {
   Image,
   TouchableOpacity,
   Animated,
+  Button,
+  Linking,
   PanResponder,
   Dimensions,
   StyleSheet
@@ -72,6 +74,10 @@ class DealDetail extends Component {
     });
   }
 
+  openDealUrl = () => {
+    Linking.openURL(this.state.deal.url)
+  }
+
   render() {
     const { deal } = this.state;
     return (
@@ -102,6 +108,7 @@ class DealDetail extends Component {
           </View>
           <View style={styles.description}>
             <Text>{deal.description}</Text>
+            <Button title="buy this deal!" onPress={this.openDealUrl} />
           </View>
         </View>
       </View>
