@@ -17,7 +17,8 @@ export default class App extends Component {
   state = {
     deals: [],
     currentDealId: null,
-    dealsFormSearch: []
+    dealsFormSearch: [],
+    activeSearchTerm: ''
   }
   animatedTitle = (direction = 1) => {
     const width = Dimensions.get('window').width - 150;
@@ -45,7 +46,7 @@ export default class App extends Component {
     if (searchTerm) {
       dealsFormSearch = await ajax.fetchDealsSearchResults(searchTerm);
     }
-    this.setState({ dealsFormSearch });
+    this.setState({ dealsFormSearch, activeSearchTerm: searchTerm });
   }
 
   setCurrentDeal = (dealId) => {
@@ -79,7 +80,9 @@ export default class App extends Component {
     if (dealsToDisplay.length > 0) {
       return (
         <View style={styles.main}>
-          <SearchBar searchDeals={this.searchDeals} />
+          <SearchBar 
+            searchDeals={this.searchDeals} 
+            initialSearchTerm={this.state.activeSearchTerm} />
           <DealList
             deals={dealsToDisplay}
             onItemPress={this.setCurrentDeal}

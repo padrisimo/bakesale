@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {
   View,
   Text,
+  ScrollView,
   Image,
   TouchableOpacity,
   Animated,
@@ -41,7 +42,7 @@ class DealDetail extends Component {
   });
 
   handleSwipe = (indexDirection) => {
-    if(!this.state.deal.media[this.state.imageIndex + indexDirection]){
+    if (!this.state.deal.media[this.state.imageIndex + indexDirection]) {
       Animated.spring(this.imageXPos, {
         toValue: 0
       }).start();
@@ -49,7 +50,7 @@ class DealDetail extends Component {
     }
     this.setState((prevState) => ({
       imageIndex: prevState.imageIndex + indexDirection
-    }),() => {
+    }), () => {
       this.imageXPos.setValue(indexDirection * this.with);
       Animated.spring(this.imageXPos, {
         toValue: 0
@@ -90,7 +91,7 @@ class DealDetail extends Component {
           source={{ uri: deal.media[this.state.imageIndex] }}
           style={[{ left: this.imageXPos }, styles.image]}
         />
-        <View style={styles.detail}>
+        <ScrollView>
           <View>
             <Text style={styles.title}>{deal.title}</Text>
           </View>
@@ -110,13 +111,14 @@ class DealDetail extends Component {
             <Text>{deal.description}</Text>
             <Button title="buy this deal!" onPress={this.openDealUrl} />
           </View>
-        </View>
+        </ScrollView>
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
+
   backLink: {
     marginBottom: 5,
     color: '#22f',
